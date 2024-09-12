@@ -15,7 +15,6 @@ userRouter.post('/signup', async (c) => {
     const body = await c.req.json();
     const { success } = signupInput.safeParse(body);
     if (!success) {
-        c.status(411);
         return c.json({
             message: "Inputs not correct"
         })
@@ -36,10 +35,14 @@ userRouter.post('/signup', async (c) => {
         id: user.id
       }, c.env.JWT_SECRET);
   
-      return c.text(jwt)
+      return c.json({
+        token: jwt,
+        message: "User created successfully",
+        user
+      })
     } catch(e) {
       console.log(e);
-      c.status(411);
+      c.status(500);
       return c.text('Invalid')
     }
   })
@@ -76,7 +79,11 @@ userRouter.post('/signup', async (c) => {
         id: user.id
       }, c.env.JWT_SECRET);
   
-      return c.text(jwt)
+      return c.json({
+        token: jwt,
+        message: "User created successfully",
+        user
+      })
     } catch(e) {
       console.log(e);
       c.status(411);

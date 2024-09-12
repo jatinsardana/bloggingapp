@@ -15,8 +15,10 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     async function sendRequest() {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
-            const jwt = response.data;
+            const jwt = response.data.token;
+            console.log(jwt);
             localStorage.setItem("token", jwt);
+            console.log(localStorage.getItem("token"));
             navigate("/blogs");
         } catch(e) {
             alert("Error while signing up")
@@ -24,14 +26,14 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         }
     }
     
-    return <div className="h-screen flex justify-center flex-col">
+    return <div className="h-screen flex justify-center flex-col  bg-red-300">
         <div className="flex justify-center">
             <div>
                 <div className="px-10">
                     <div className="text-3xl font-extrabold">
                         Create an account
                     </div>
-                    <div className="text-slate-500">
+                    <div className="text-slate-800">
                         {type === "signin" ? "Don't have an account?" : "Already have an account?" }
                         <Link className="pl-2 underline" to={type === "signin" ? "/signup" : "/signin"}>
                             {type === "signin" ? "Sign up" : "Sign in"}
@@ -39,19 +41,19 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                     </div>
                 </div>
                 <div className="pt-8">
-                    {type === "signup" ? <LabelledInput label="Name" placeholder="Harkirat Singh..." onChange={(e) => {
+                    {type === "signup" ? <LabelledInput label="Name" placeholder="Jatin Sardana..." onChange={(e) => {
                         setPostInputs({
                             ...postInputs,
                             name: e.target.value
                         })
                     }} /> : null}
-                    <LabelledInput label="Username" placeholder="harkirat@gmail.com" onChange={(e) => {
+                    <LabelledInput label="Email" placeholder="abcd@gmail.com" onChange={(e) => {
                         setPostInputs({
                             ...postInputs,
                             username: e.target.value
                         })
                     }} />
-                    <LabelledInput label="Password" type={"password"} placeholder="123456" onChange={(e) => {
+                    <LabelledInput label="Password" type={"password"} placeholder="1234****" onChange={(e) => {
                         setPostInputs({
                             ...postInputs,
                             password: e.target.value
