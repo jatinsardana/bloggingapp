@@ -13,12 +13,12 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         username: "",
         password: ""
     });
-    const [errors, setErrors] = useState<Partial<SignupInput>>({});
+    const [errors, setErrors] = useState<FormErrors>({});
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const validateForm = () => {
-        const newErrors: Partial<SignupInput> = {};
+        const newErrors: FormErrors = {};
         if (type === "signup" && !postInputs.name) {
             newErrors.name = "Name is required";
         }
@@ -160,5 +160,7 @@ function LabelledInput({ label, placeholder, onChange, type, error, endAdornment
         </div>
     );
 }
+
+type FormErrors = Partial<SignupInput> & { general?: string };
 
 export default Auth;
