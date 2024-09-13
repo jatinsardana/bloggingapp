@@ -1,5 +1,2 @@
 # bloggingapp
-here you can blogs
-"# bloggingapp" 
-"# bloggingapp" 
-"# bloggingapp" 
+his is a typescript project  with backend (hono) and fronted(react)
