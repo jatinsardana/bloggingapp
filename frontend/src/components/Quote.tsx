@@ -1,4 +1,5 @@
 // import React from 'react';
+// add your quote if you want to -> to enhance your experience
 
 export const Quote = () => {
     return (
