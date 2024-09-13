@@ -1,4 +1,8 @@
+// import React from 'react';
 import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Clock, Circle as CircleIcon } from 'lucide-react';
+
 interface BlogCardProps {
     authorName: string;
     title: string;
@@ -14,41 +18,50 @@ export const BlogCard = ({
     content,
     publishedDate
 }: BlogCardProps) => {
-    return <Link to={`/blog/${id}`}>
-        <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
-            <div className="flex">
-                <Avatar name={authorName} />
-                <div className="font-extralight pl-2 text-sm flex justify-center flex-col">{authorName}</div>
-                <div className="flex justify-center flex-col pl-2">
-                    <Circle />
+    return (
+        <Link to={`/blog/${id}`}>
+            <motion.div 
+                className="p-4 border-b border-slate-200 pb-4 w-full max-w-screen-md cursor-pointer hover:bg-slate-50 transition-colors duration-200"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+            >
+                <div className="flex items-center mb-2">
+                    <Avatar name={authorName} />
+                    <div className="font-light text-sm ml-2 text-gray-600">{authorName}</div>
+                    <CircleIcon className="w-1 h-1 mx-2 text-slate-400" />
+                    <div className="font-light text-sm text-slate-500 flex items-center">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {publishedDate}
+                    </div>
                 </div>
-                <div className="pl-2 font-thin text-slate-500 text-sm flex justify-center flex-col">
-                    {publishedDate}
+                <motion.h2 
+                    className="text-xl font-semibold mb-2 text-gray-800"
+                    whileHover={{ x: 2 }}
+                    transition={{ type: "spring", stiffness: 500 }}
+                >
+                    {title}
+                </motion.h2>
+                <p className="text-md font-light text-gray-600 mb-3">
+                    {content.slice(0, 100) + "..."}
+                </p>
+                <div className="text-slate-500 text-sm font-light flex items-center">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {`${Math.ceil(content.length / 100)} minute read`}
                 </div>
-            </div>
-            <div className="text-xl font-semibold pt-2">
-                {title}
-            </div>
-            <div className="text-md font-thin">
-                {content.slice(0, 100) + "..."}
-            </div>
-            <div className="text-slate-500 text-sm font-thin pt-4">
-                {`${Math.ceil(content.length / 100)} minute(s) read`}
-            </div>
-        </div>
-    </Link>
-}
-
-export function Circle() {
-    return <div className="h-1 w-1 rounded-full bg-slate-500">
-
-    </div>
+            </motion.div>
+        </Link>
+    );
 }
 
 export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }) {
-    return <div className={`relative inline-flex items-center justify-center overflow-hidden bg-gray-600 rounded-full ${size === "small" ? "w-6 h-6" : "w-10 h-10"}`}>
-    <span className={`${size === "small" ? "text-xs" : "text-md"} font-extralight text-gray-600 dark:text-gray-300`}>
-        {name[0]}
-    </span>
-</div>
+    const sizeClasses = size === "small" ? "w-6 h-6 text-xs" : "w-10 h-10 text-base";
+    return (
+        <div className={`relative inline-flex items-center justify-center overflow-hidden bg-indigo-100 rounded-full ${sizeClasses}`}>
+            <span className="font-medium text-indigo-600">
+                {name[0].toUpperCase()}
+            </span>
+        </div>
+    );
 }
+
+export default BlogCard;
