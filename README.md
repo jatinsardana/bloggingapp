@@ -1,4 +1,4 @@
-# bloggingapp
+# Blog App
 This is a typescript project  with backend (hono) and fronted(react)
 
 # Getting Started
